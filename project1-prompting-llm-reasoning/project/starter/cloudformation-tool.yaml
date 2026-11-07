@@ -1,0 +1,209 @@
+AWSTemplateFormatVersion: '2010-09-09'
+Description: Bug report tool - DynamoDB table, Lambda function, and IAM roles for the AgentCore Gateway and harness
+
+Resources:
+
+  BugReportsTable:
+    Type: AWS::DynamoDB::Table
+    Properties:
+      TableName: !Sub "${AWS::StackName}-bug-reports"
+      BillingMode: PAY_PER_REQUEST
+      AttributeDefinitions:
+        - AttributeName: ticketId
+          AttributeType: S
+      KeySchema:
+        - AttributeName: ticketId
+          KeyType: HASH
+
+  LambdaExecutionRole:
+    Type: AWS::IAM::Role
+    Properties:
+      RoleName: !Sub "${AWS::StackName}-lambda-role"
+      AssumeRolePolicyDocument:
+        Version: '2012-10-17'
+        Statement:
+          - Effect: Allow
+            Principal:
+              Service: lambda.amazonaws.com
+            Action: sts:AssumeRole
+      ManagedPolicyArns:
+        - arn:aws:iam::aws:policy/service-role/AWSLambdaBasicExecutionRole
+      Policies:
+        - PolicyName: DynamoDBPutItem
+          PolicyDocument:
+            Version: '2012-10-17'
+            Statement:
+              - Effect: Allow
+                Action: dynamodb:PutItem
+                Resource: !GetAtt BugReportsTable.Arn
+
+  CreateBugReportFunction:
+    Type: AWS::Lambda::Function
+    DependsOn: LambdaExecutionRole
+    Properties:
+      FunctionName: !Sub "${AWS::StackName}-create-bug-report"
+      Runtime: python3.12
+      Handler: index.lambda_handler
+      Timeout: 10
+      Role: !GetAtt LambdaExecutionRole.Arn
+      Environment:
+        Variables:
+          TABLE_NAME: !Ref BugReportsTable
+      Code:
+        ZipFile: |
+          import json
+          import os
+          import uuid
+          from datetime import datetime, timezone
+          import boto3
+
+          table = boto3.resource("dynamodb").Table(os.environ["TABLE_NAME"])
+
+          REQUIRED_FIELDS = ("description", "stepsToReproduce", "environment")
+
+          def lambda_handler(event, context):
+              print("EVENT:", json.dumps(event, default=str))
+
+              description = (event.get("description") or "").strip()
+              steps = (event.get("stepsToReproduce") or "").strip()
+              environment = (event.get("environment") or "").strip()
+
+              missing = [f for f in REQUIRED_FIELDS if not (event.get(f) or "").strip()]
+              if missing:
+                  return {"error": "missing_fields", "fields": missing}
+
+              ticket_id = str(uuid.uuid4())
+              item = {
+                  "ticketId": ticket_id,
+                  "description": description,
+                  "stepsToReproduce": steps,
+                  "environment": environment,
+                  "status": "OPEN",
+                  "createdAt": datetime.now(timezone.utc).isoformat(),
+              }
+
+              table.put_item(Item=item)
+
+              return {"ticketId": ticket_id, "status": "OPEN"}
+
+  GatewayRole:
+    Type: AWS::IAM::Role
+    Properties:
+      RoleName: !Sub "${AWS::StackName}-gateway-role"
+      AssumeRolePolicyDocument:
+        Version: '2012-10-17'
+        Statement:
+          - Effect: Allow
+            Principal:
+              Service: bedrock-agentcore.amazonaws.com
+            Action: sts:AssumeRole
+      Policies:
+        - PolicyName: InvokeBugReportLambda
+          PolicyDocument:
+            Version: '2012-10-17'
+            Statement:
+              - Effect: Allow
+                Action: lambda:InvokeFunction
+                Resource: !GetAtt CreateBugReportFunction.Arn
+
+  HarnessRole:
+    Type: AWS::IAM::Role
+    Properties:
+      RoleName: !Sub "${AWS::StackName}-harness-role"
+      AssumeRolePolicyDocument:
+        Version: '2012-10-17'
+        Statement:
+          - Effect: Allow
+            Principal:
+              Service: bedrock-agentcore.amazonaws.com
+            Action: sts:AssumeRole
+      Policies:
+        - PolicyName: HarnessRuntimePermissions
+          PolicyDocument:
+            Version: '2012-10-17'
+            Statement:
+              - Sid: BedrockModelInvocation
+                Effect: Allow
+                Action:
+                  - bedrock:InvokeModel
+                  - bedrock:InvokeModelWithResponseStream
+                Resource:
+                  - !Sub "arn:aws:bedrock:*::foundation-model/*"
+                  - !Sub "arn:aws:bedrock:${AWS::Region}:${AWS::AccountId}:*"
+              - Sid: EcrPublicTokenAccess
+                Effect: Allow
+                Action:
+                  - ecr-public:GetAuthorizationToken
+                  - sts:GetServiceBearerToken
+                Resource: "*"
+              - Sid: XRayTracingAccess
+                Effect: Allow
+                Action:
+                  - xray:PutTraceSegments
+                  - xray:PutTelemetryRecords
+                  - xray:GetSamplingRules
+                  - xray:GetSamplingTargets
+                Resource: "*"
+              - Sid: CloudWatchLogs
+                Effect: Allow
+                Action:
+                  - logs:CreateLogGroup
+                  - logs:CreateLogStream
+                  - logs:PutLogEvents
+                  - logs:DescribeLogGroups
+                  - logs:DescribeLogStreams
+                  - logs:PutResourcePolicy
+                Resource: "*"
+              - Sid: CloudWatchMetricsPublish
+                Effect: Allow
+                Action: cloudwatch:PutMetricData
+                Resource: "*"
+                Condition:
+                  StringEquals:
+                    cloudwatch:namespace: bedrock-agentcore
+              - Sid: AgentCoreWorkloadIdentity
+                Effect: Allow
+                Action:
+                  - bedrock-agentcore:GetWorkloadAccessToken
+                  - bedrock-agentcore:GetWorkloadAccessTokenForJWT
+                Resource:
+                  - !Sub "arn:aws:bedrock-agentcore:${AWS::Region}:${AWS::AccountId}:workload-identity-directory/default"
+                  - !Sub "arn:aws:bedrock-agentcore:${AWS::Region}:${AWS::AccountId}:workload-identity-directory/default/workload-identity/*"
+              - Sid: AgentCoreMemory
+                Effect: Allow
+                Action:
+                  - bedrock-agentcore:CreateEvent
+                  - bedrock-agentcore:DeleteEvent
+                  - bedrock-agentcore:GetEvent
+                  - bedrock-agentcore:ListEvents
+                  - bedrock-agentcore:RetrieveMemoryRecords
+                Resource: !Sub "arn:aws:bedrock-agentcore:${AWS::Region}:${AWS::AccountId}:memory/*"
+              - Sid: AgentCoreGatewayAccess
+                Effect: Allow
+                Action: bedrock-agentcore:InvokeGateway
+                Resource: !Sub "arn:aws:bedrock-agentcore:${AWS::Region}:${AWS::AccountId}:gateway/*"
+
+Outputs:
+  BugReportsTableArn:
+    Description: ARN of the BugReports DynamoDB table
+    Value: !GetAtt BugReportsTable.Arn
+
+  BugReportsTableName:
+    Description: Name of the BugReports DynamoDB table
+    Value: !Ref BugReportsTable
+
+  LambdaFunctionArn:
+    Description: ARN of the create-bug-report Lambda function
+    Value: !GetAtt CreateBugReportFunction.Arn
+
+  LambdaExecutionRoleArn:
+    Description: ARN of the Lambda execution IAM role
+    Value: !GetAtt LambdaExecutionRole.Arn
+
+  GatewayRoleArn:
+    Description: ARN of the IAM role the AgentCore Gateway assumes to invoke the Lambda
+    Value: !GetAtt GatewayRole.Arn
+
+  HarnessRoleArn:
+    Description: ARN of the IAM role the AgentCore managed harness assumes
+    Value: !GetAtt HarnessRole.Arn

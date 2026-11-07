@@ -1,0 +1,11 @@
+.venv/
+venv/
+__pycache__/
+node_modules/
+.bedrock_agentcore/
+.bedrock_agentcore.yaml
+.DS_Store
+awscliv2.zip
+aws/
+*.pem
+.env

@@ -1,0 +1,7 @@
+New session: 267416e3-7343-49dd-8030-5a3ea516cf9a
+Type your message (or 'exit' to quit).
+
+You: I would like to speak with a manager about a billing dispute on my account.
+Bot: For billing disputes and to speak with a manager, please contact our human support team directly at 1-800-555-0199, available Monday to Friday, 9am-6pm. They are equipped to handle account-specific issues and provide the assistance you need.
+
+You: exit

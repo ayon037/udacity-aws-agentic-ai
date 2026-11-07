@@ -1,0 +1,27 @@
+╭────────────────────────────────── csagent ───────────────────────────────────╮
+│ Session: e9c88583-ea2c-4907-99b1-46aa278fc7ae                                │
+│ Request ID: ef455d46-c5ae-4fb6-a550-a796d60da173                             │
+│ ARN:                                                                         │
+│ arn:aws:bedrock-agentcore:us-east-1:XXXXXXXXXXXX:runtime/csagent-oPs09F9hhu  │
+│ Logs: aws logs tail                                                          │
+│ /aws/bedrock-agentcore/runtimes/csagent-oPs09F9hhu-DEFAULT                   │
+│ --log-stream-name-prefix "2026/11/07/[runtime-logs" --follow                 │
+│       aws logs tail                                                          │
+│ /aws/bedrock-agentcore/runtimes/csagent-oPs09F9hhu-DEFAULT                   │
+│ --log-stream-name-prefix "2026/11/07/[runtime-logs" --since 1h               │
+│ GenAI Dashboard:                                                             │
+│ https://console.aws.amazon.com/cloudwatch/home?region=us-east-1#gen-ai-obser │
+│ vability/agent-core                                                          │
+╰──────────────────────────────────────────────────────────────────────────────╯
+
+Response:
+Hello Jane! I'll keep it brief.
+
+I see you have two recent orders:
+- **ORD-001**: Wireless Headphones Pro ($89.99) - Shipped via UPS, tracking 
+TRK987654321, estimated delivery Nov 9, 2026
+- **ORD-002**: Kindle Paperwhite - Return and refund approved ($139.99, Refund 
+ID REF-27N4971J)
+
+Is there anything specific you'd like to know or any assistance you need with 
+these orders?

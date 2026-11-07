@@ -1,0 +1,7 @@
+New session: a55e6363-5faf-4a12-8a03-14a48108e69f
+Type your message (or 'exit' to quit).
+
+You: Do you offer gift wrapping for orders?
+Bot: This information is not available in the FAQ. For inquiries about gift wrapping, please contact our human support at 1-800-555-0199 (Mon-Fri, 9am-6pm).
+
+You: exit

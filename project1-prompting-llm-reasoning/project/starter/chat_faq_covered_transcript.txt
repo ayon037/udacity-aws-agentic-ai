@@ -1,0 +1,7 @@
+New session: 81c2534a-ab9a-4584-9295-10c9c7c7b02a
+Type your message (or 'exit' to quit).
+
+You: What is your return policy?
+Bot: You can return most items within 30 days of delivery as long as they're unused and in original packaging (unless the item arrived defective). For more details on how to start a return, who pays for return shipping, and when you can expect your refund, please see the FAQ above. If you have any further questions or need assistance with a return, please contact our support team at 1-800-555-0199 (Mon-Fri, 9am-6pm).
+
+You: exit

@@ -1,0 +1,20 @@
+╭────────────────────────────────── csagent ───────────────────────────────────╮
+│ Session: e9c88583-ea2c-4907-99b1-46aa278fc7ae                                │
+│ Request ID: c5b159be-9b0a-405f-81de-d5a497cd66f9                             │
+│ ARN:                                                                         │
+│ arn:aws:bedrock-agentcore:us-east-1:XXXXXXXXXXXX:runtime/csagent-oPs09F9hhu  │
+│ Logs: aws logs tail                                                          │
+│ /aws/bedrock-agentcore/runtimes/csagent-oPs09F9hhu-DEFAULT                   │
+│ --log-stream-name-prefix "2026/11/07/[runtime-logs" --follow                 │
+│       aws logs tail                                                          │
+│ /aws/bedrock-agentcore/runtimes/csagent-oPs09F9hhu-DEFAULT                   │
+│ --log-stream-name-prefix "2026/11/07/[runtime-logs" --since 1h               │
+│ GenAI Dashboard:                                                             │
+│ https://console.aws.amazon.com/cloudwatch/home?region=us-east-1#gen-ai-obser │
+│ vability/agent-core                                                          │
+╰──────────────────────────────────────────────────────────────────────────────╯
+
+Response:
+Yes Jane, I remember your name and that you prefer concise responses. 
+
+How can I help you today?
