@@ -1,5 +1,7 @@
 # Project 1: Support Chatbot with Prompt-Based Routing
 
+> Full plain-language guide (technologies, data, file-by-file workflow): [DOCUMENTATION.md](DOCUMENTATION.md) / [DOCUMENTATION.pdf](DOCUMENTATION.pdf)
+
 A customer-support assistant for an online shop, built on the **Amazon Bedrock AgentCore managed harness**. One system prompt classifies every message and handles three paths. There is no separate classifier service or flow graph.
 
 ## How it works

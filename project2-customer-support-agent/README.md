@@ -1,5 +1,7 @@
 # Project 2: E-commerce Customer Support Agent
 
+> Full plain-language guide (technologies, data, file-by-file workflow): [DOCUMENTATION.md](DOCUMENTATION.md) / [DOCUMENTATION.pdf](DOCUMENTATION.pdf)
+
 A conversational support agent deployed to **Amazon Bedrock AgentCore Runtime** with the **Strands Agents SDK**. It tracks orders, processes refunds, answers product and policy questions, remembers customers across sessions, calculates loyalty discounts exactly, and can browse the web.
 
 ## Architecture

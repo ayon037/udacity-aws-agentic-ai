@@ -7,6 +7,8 @@ Two hands-on projects building agents on **Amazon Bedrock AgentCore** and the **
 | 1 | Support chatbot with prompt-based routing | Single-prompt intent classification, a bug-report tool behind an AgentCore Gateway (Lambda + DynamoDB), FAQ grounding, and an automated Bedrock Evaluations run (10/10 correctness) | [`project1-prompting-llm-reasoning`](project1-prompting-llm-reasoning/) |
 | 2 | E-commerce customer support agent | AgentCore Runtime deployment, MCP tools via Gateway, RAG with a Bedrock Knowledge Base, cross-session Memory, Code Interpreter, Browser tool | [`project2-customer-support-agent`](project2-customer-support-agent/) |
 
+Detailed guides: [Project 1](project1-prompting-llm-reasoning/DOCUMENTATION.md) ([PDF](project1-prompting-llm-reasoning/DOCUMENTATION.pdf)), [Project 2](project2-customer-support-agent/DOCUMENTATION.md) ([PDF](project2-customer-support-agent/DOCUMENTATION.pdf)).
+
 ## Skills demonstrated
 - Deploying agents to AgentCore Runtime (`BedrockAgentCoreApp`, `@app.entrypoint`)
 - Exposing REST APIs and Lambda functions as MCP tools through AgentCore Gateway
