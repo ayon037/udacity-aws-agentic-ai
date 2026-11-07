@@ -1,3 +1,5 @@
+$ agentcore invoke '{"prompt": "I want to return my Kindle Paperwhite (ORD-002). Please initiate a refund.", "customer_id": "CUST-123", "session_id": "t2"}'
+
 ╭────────────────────────────────── csagent ───────────────────────────────────╮
 │ Session: e9c88583-ea2c-4907-99b1-46aa278fc7ae                                │
 │ Request ID: 9cbe0e9d-ad86-4e5b-a791-173f8c8e1a51                             │
