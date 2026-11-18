@@ -1,0 +1,89 @@
+##### CUST-001 :: I want to return my order ORD-27176
+Invoking arn:aws:bedrock-agentcore:us-east-1:XXXXXXXXXXXX:runtime/udacity_agentcore_runtime-ZDGV8XHVDg
+Session: 0e24348d | Customer: CUST-001
+Query: I want to return my order ORD-27176
+
+Response: Hello,
+
+Thank you for contacting NovaMart! I'm happy to help you with your return.
+
+Great news – your return has been successfully initiated for your Wireless Headphones Pro (Order ID: ORD-27176).
+
+**Return Details:**
+- **Return Reference Number:** RET-4E3F362E
+- **Refund Amount:** $149.99
+- **Order Date:** November 7, 2026
+
+**Next Steps:**
+1. Pack the Wireless Headphones Pro in its original packaging
+2. Use the prepaid return label that has been emailed to you
+3. Drop off the package at any authorized shipping location
+
+Your refund of $149.99 will be processed within 5-7 business days after we receive the item.
+
+If you have any questions or need further assistance, please don't hesitate to reach out. We're here to help!
+
+Best regards,  
+NovaMart Customer Support
+X-Ray trace: 1-6afdfaaa-dd688c41a2a065d518f4738a
+
+##### CUST-002 :: What is the return policy for premium customers?
+Invoking arn:aws:bedrock-agentcore:us-east-1:XXXXXXXXXXXX:runtime/udacity_agentcore_runtime-ZDGV8XHVDg
+Session: daba99a7 | Customer: CUST-002
+Query: What is the return policy for premium customers?
+
+Response: Hello!
+
+Thank you for reaching out! I'm happy to explain our return policy for Premium customers.
+
+**Premium Customer Return Window**
+
+As a Premium customer, you enjoy an **extended 60-day return window** on eligible purchases—that's double the standard 30-day window!
+
+**How Premium Status Works**
+
+You automatically qualify for Premium tier when you:
+- Spend $500 or more in a calendar year, OR
+- Place 20 or more orders in a calendar year
+
+Your tier status is evaluated on a rolling 12-month basis.
+
+**General Return Requirements**
+
+All returns must meet these criteria:
+- Items must be eligible (for example, electronics in original packaging, clothing unworn with tags)
+- Returns are initiated through your account's Order History
+- Refunds are processed within 5-7 business days of receiving the return
+
+**Other Premium Benefits**
+
+Beyond the extended return window, you also enjoy:
+- Free expedited shipping on all orders
+- 3-year warranty on electronics (vs. 1-year for Standard customers)
+- Priority customer support with response within 4 hours
+- Early access to sales and new product launches
+- Dedicated account manager for orders over $500
+
+If you have a specific order you'd like to return or any other questions about the return process, I'm here to help!
+
+Best regards,  
+NovaMart Customer Support
+X-Ray trace: 1-6afdfad3-9f8696547b0f7b3f0cc4e9e3
+
+##### CUST-003 :: How much are 5 items at $29.99 with 10% off?
+Invoking arn:aws:bedrock-agentcore:us-east-1:XXXXXXXXXXXX:runtime/udacity_agentcore_runtime-ZDGV8XHVDg
+Session: 87bc2adc | Customer: CUST-003
+Query: How much are 5 items at $29.99 with 10% off?
+
+Response: Hello!
+
+Happy to help with that calculation!
+
+For 5 items at $29.99 each with a 10% discount:
+- Subtotal: 5 × $29.99 = $149.95
+- Discount (10%): $14.995
+- **Final total: $134.96**
+
+If you have any other questions or need assistance with an order, feel free to reach out. I'm here to help!
+X-Ray trace: 1-6afdfaf7-9661fcbf594ab307d23e697c
+
